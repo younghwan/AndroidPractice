@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
+    android:divider="@drawable/item_divider"
+    android:orientation="vertical"
+    android:showDividers="end">
+
+    <TextView
+        android:gravity="center_vertical"
+        android:id="@+id/list_name"
+        android:layout_width="wrap_content"
+        android:layout_height="89dp"
+        android:layout_marginStart="10sp"
+        android:textSize="40sp"
+        tools:text="텍스트" />
+</LinearLayout>
