@@ -1,24 +1,19 @@
 package com.example.androidpractice.ui.todo
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -26,6 +21,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,10 +36,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.androidpractice.model.Todo
 
 @Composable
-fun TodoScreen() {
+fun TodoScreen(viewModel: TodoViewModel = viewModel()) {
     val sampleTodos = remember {
         mutableStateListOf(
             Todo(title = "Shopping", content = "Buy milk, eggs, and bread at the supermarket"),
@@ -55,6 +53,9 @@ fun TodoScreen() {
             Todo(title = "Plan", content = "Plan weekend trip itinerary")
         )
     }
+
+    val uiState by viewModel.uiState.collectAsState()
+
     val showAddTodoDialog = remember { mutableStateOf(false) }
     val titleInput = remember { mutableStateOf("") }
     val contentInput = remember { mutableStateOf("") }
@@ -85,7 +86,12 @@ fun TodoScreen() {
                             Text("취소")
                         }
                         TextButton(onClick = {
-                            sampleTodos.add(Todo(title = titleInput.value, content = contentInput.value))
+                            viewModel.onIntent(
+                                TodoIntent.AddTodo(
+                                    title = titleInput.value,
+                                    content = contentInput.value
+                                )
+                            )
                             showAddTodoDialog.value = false
                             titleInput.value = ""
                             contentInput.value = ""
@@ -106,8 +112,8 @@ fun TodoScreen() {
                 columns = StaggeredGridCells.Adaptive(160.dp),
                 modifier = Modifier.padding(paddingValues),
             ) {
-                items(sampleTodos.size) { index ->
-                    TodoNote(sampleTodos[index], modifier = Modifier.padding(8.dp))
+                items(uiState.todos.size) { index ->
+                    TodoNote(uiState.todos[index], modifier = Modifier.padding(8.dp))
                 }
             }
         }

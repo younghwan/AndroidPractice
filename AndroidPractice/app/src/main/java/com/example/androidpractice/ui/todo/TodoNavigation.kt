@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object NavOneRoute
 
-fun NavGraphBuilder.navOneScreen() {
+fun NavGraphBuilder.navTodoScreen() {
     composable<NavOneRoute> {
         TodoScreen()
     }

@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.example.androidpractice.model.NavAppState
-import com.example.androidpractice.ui.todo.navOneScreen
+import com.example.androidpractice.ui.todo.navTodoScreen
 
 @Composable
 fun MainNavHost(
@@ -22,7 +22,7 @@ fun MainNavHost(
     ) {
         // NavGraphBuilder : NavHost 안에서 이동 가능한 화면 그래프를 정의하는 빌더(DSL)
         homeScreen(navController)
-        navOneScreen()
+        navTodoScreen()
         navTwoScreen()
         navThreeScreen()
     }
