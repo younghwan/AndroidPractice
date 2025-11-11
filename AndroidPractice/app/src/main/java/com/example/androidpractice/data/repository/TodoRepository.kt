@@ -1,6 +1,6 @@
 package com.example.androidpractice.data.repository
 
-import com.example.androidpractice.db.TodoDao
+import com.example.androidpractice.db.room.TodoDao
 import com.example.androidpractice.model.Todo
 import kotlinx.coroutines.flow.Flow
 

@@ -36,10 +36,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.room.Room
 import com.example.androidpractice.data.repository.TodoRepository
-import com.example.androidpractice.db.AppDatabase
+import com.example.androidpractice.db.room.AppDatabase
 import com.example.androidpractice.model.Todo
 
 @Composable
