@@ -1,9 +1,12 @@
 package com.example.androidpractice.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.util.UUID
 
+@Entity(tableName = "todos")
 data class Todo(
-    val id: String = UUID.randomUUID().toString(),
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val title: String,
     val content: String,
     val timestamp: Long = System.currentTimeMillis()

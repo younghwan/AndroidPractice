@@ -23,7 +23,6 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -31,27 +30,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.room.Room
+import com.example.androidpractice.data.repository.TodoRepository
+import com.example.androidpractice.db.AppDatabase
 import com.example.androidpractice.model.Todo
 
 @Composable
-fun TodoScreen(viewModel: TodoViewModel = viewModel()) {
-    val sampleTodos = remember {
-        mutableStateListOf(
-            Todo(title = "Shopping", content = "Buy milk, eggs, and bread at the supermarket"),
-            Todo(title = "Workout", content = "Go for a 30-minute run "),
-            Todo(title = "Read", content = "Read 50 pages of a book"),
-            Todo(title = "Study", content = "Complete Compose tutorial"),
-            Todo(title = "Call", content = "Call mom and dad"),
-            Todo(title = "Cook", content = "Prepare dinner: pasta and salad"),
-            Todo(title = "Clean", content = "Vacuum the living room and dust shelves"),
-            Todo(title = "Plan", content = "Plan weekend trip itinerary")
-        )
+fun TodoScreen() {
+
+    val context = LocalContext.current
+    val db = Room.databaseBuilder(
+        context,
+        AppDatabase::class.java, "Todo db"
+    ).build()
+
+    val viewModel: TodoViewModel = remember {
+        TodoViewModel(TodoRepository(db.todoDao()))
     }
 
     val uiState by viewModel.uiState.collectAsState()
