@@ -29,17 +29,11 @@ class TodoViewModel(
         viewModelScope.launch {
             todoRepository.addTodo(newTodo)
         }
-        intent {
-            copy(todos = todos + newTodo)
-        }
     }
 
     private fun removeTodo(todo: Todo) {
         viewModelScope.launch {
             todoRepository.removeTodo(todo)
-        }
-        intent {
-            copy(todos = todos.filterNot { it.id == todo.id })
         }
     }
 
